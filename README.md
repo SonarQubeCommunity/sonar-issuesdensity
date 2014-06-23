@@ -1,0 +1,2 @@
+Sonar Issues Density Plugin
+===========================
