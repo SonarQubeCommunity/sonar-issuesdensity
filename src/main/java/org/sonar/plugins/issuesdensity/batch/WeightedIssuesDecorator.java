@@ -20,10 +20,7 @@
 package org.sonar.plugins.issuesdensity.batch;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multiset;
-import com.google.common.collect.TreeMultiset;
+import com.google.common.collect.*;
 import org.picocontainer.Startable;
 import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
@@ -103,7 +100,7 @@ public class WeightedIssuesDecorator implements Decorator, Startable {
 
   void decorate(DecoratorContext context) {
     double value = 0.0;
-    Multiset<String> distribution = HashMultiset.create();
+    Multiset<String> distribution = LinkedHashMultiset.create();
 
     for (String severity : Severity.ALL) {
       Measure measure = context.getMeasure(SeverityUtils.severityToIssueMetric(severity));
