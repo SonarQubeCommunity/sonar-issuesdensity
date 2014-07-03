@@ -22,7 +22,6 @@ package org.sonar.plugins.issuesdensity.batch;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.rules.RulePriority;
 
 final class SeverityUtils {
 

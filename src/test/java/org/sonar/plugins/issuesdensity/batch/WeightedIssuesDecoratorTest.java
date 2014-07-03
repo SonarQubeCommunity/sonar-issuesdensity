@@ -20,22 +20,26 @@
 package org.sonar.plugins.issuesdensity.batch;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.config.Settings;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
 import org.sonar.api.rule.Severity;
-import org.sonar.api.rules.RulePriority;
-import org.sonar.api.test.IsMeasure;
 import org.sonar.plugins.issuesdensity.IssuesDensityMetrics;
 import org.sonar.plugins.issuesdensity.IssuesDensityPlugin;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class WeightedIssuesDecoratorTest {
+
+  @Captor
+  ArgumentCaptor<Measure> measureCaptor;
 
   @Test
   public void test_weighted_issues() {
@@ -50,8 +54,10 @@ public class WeightedIssuesDecoratorTest {
     decorator.start();
     decorator.decorate(context);
 
-    verify(context).saveMeasure(argThat(new IsMeasure(IssuesDensityMetrics.WEIGHTED_ISSUES, (double) (100 * 10 + 80 * 5 + 50 * 0))));
-    verify(context).saveMeasure(argThat(new IsMeasure(IssuesDensityMetrics.WEIGHTED_ISSUES, "INFO=50;CRITICAL=80;BLOCKER=100")));
+    verify(context).saveMeasure(measureCaptor.capture());
+    assertThat(measureCaptor.getValue().getMetric()).isEqualTo(IssuesDensityMetrics.WEIGHTED_ISSUES);
+    assertThat(measureCaptor.getValue().getValue()).isEqualTo(100 * 10 + 80 * 5 + 50 * 0d);
+    assertThat(measureCaptor.getValue().getData()).isEqualTo("INFO=50;CRITICAL=80;BLOCKER=100");
   }
 
   // SONAR-3092
@@ -65,9 +71,10 @@ public class WeightedIssuesDecoratorTest {
     decorator.start();
     decorator.decorate(context);
 
-    verify(context).saveMeasure(any(Measure.class));
-    // SONAR-4987
-    verify(context, never()).saveMeasure(argThat(new IsMeasure(IssuesDensityMetrics.WEIGHTED_ISSUES, "")));
+    verify(context).saveMeasure(measureCaptor.capture());
+    assertThat(measureCaptor.getValue().getMetric()).isEqualTo(IssuesDensityMetrics.WEIGHTED_ISSUES);
+    assertThat(measureCaptor.getValue().getValue()).isEqualTo(0d);
+    assertThat(measureCaptor.getValue().getData()).isNull();
   }
 
   @Test
