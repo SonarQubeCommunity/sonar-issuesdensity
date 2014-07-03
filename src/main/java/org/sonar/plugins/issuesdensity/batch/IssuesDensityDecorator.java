@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.issuesdensity.batch;
 
+import com.google.common.collect.Lists;
 import org.sonar.api.batch.*;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
@@ -28,7 +29,6 @@ import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.plugins.issuesdensity.IssuesDensityMetrics;
 
-import java.util.Arrays;
 import java.util.List;
 
 @DependsUpon(DecoratorBarriers.ISSUES_TRACKED)
@@ -39,8 +39,8 @@ public class IssuesDensityDecorator implements Decorator {
   }
 
   @DependsUpon
-  public List<Metric> dependsUponWeightedIissuesAndNcloc() {
-    return Arrays.<Metric>asList(IssuesDensityMetrics.WEIGHTED_ISSUES, CoreMetrics.NCLOC);
+  public List<Metric> dependsUponWeightedIssuesAndNcloc() {
+    return Lists.<Metric>newArrayList(IssuesDensityMetrics.WEIGHTED_ISSUES, CoreMetrics.NCLOC);
   }
 
   @DependedUpon
@@ -81,8 +81,4 @@ public class IssuesDensityDecorator implements Decorator {
     return rci;
   }
 
-  @Override
-  public String toString() {
-    return getClass().getSimpleName();
-  }
 }

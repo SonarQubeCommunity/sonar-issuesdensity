@@ -19,6 +19,7 @@
  */
 package org.sonar.plugins.issuesdensity.batch;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
 import org.picocontainer.Startable;
@@ -95,15 +96,11 @@ public class WeightedIssuesDecorator implements Decorator, Startable {
 
   @Override
   public void decorate(Resource resource, DecoratorContext context) {
-    decorate(context);
-  }
-
-  void decorate(DecoratorContext context) {
     double value = 0.0;
     Multiset<String> distribution = LinkedHashMultiset.create();
 
     for (String severity : Severity.ALL) {
-      Measure measure = context.getMeasure(SeverityUtils.severityToIssueMetric(severity));
+      Measure measure = context.getMeasure(severityToIssueMetric(severity));
       if (measure != null && MeasureUtils.hasValue(measure)) {
         distribution.add(severity, measure.getIntValue());
         double add = weightsBySeverity.get(severity) * measure.getIntValue();
@@ -115,6 +112,25 @@ public class WeightedIssuesDecorator implements Decorator, Startable {
     // SONAR-4987 We should store an empty string for the distribution value
     Measure measure = new Measure(IssuesDensityMetrics.WEIGHTED_ISSUES, value, Strings.emptyToNull(distributionFormatted));
     context.saveMeasure(measure);
+  }
+
+  @VisibleForTesting
+  static Metric severityToIssueMetric(String severity) {
+    Metric metric;
+    if (Severity.BLOCKER.equals(severity)) {
+      metric = CoreMetrics.BLOCKER_VIOLATIONS;
+    } else if (Severity.CRITICAL.equals(severity)) {
+      metric = CoreMetrics.CRITICAL_VIOLATIONS;
+    } else if (Severity.MAJOR.equals(severity)) {
+      metric = CoreMetrics.MAJOR_VIOLATIONS;
+    } else if (Severity.MINOR.equals(severity)) {
+      metric = CoreMetrics.MINOR_VIOLATIONS;
+    } else if (Severity.INFO.equals(severity)) {
+      metric = CoreMetrics.INFO_VIOLATIONS;
+    } else {
+      throw new IllegalArgumentException("Unsupported severity: " + severity);
+    }
+    return metric;
   }
 
 }

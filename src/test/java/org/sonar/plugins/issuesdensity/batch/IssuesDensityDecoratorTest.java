@@ -25,24 +25,39 @@ import org.mockito.Matchers;
 import org.sonar.api.batch.DecoratorContext;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Measure;
+import org.sonar.api.resources.Project;
 import org.sonar.api.resources.Resource;
 import org.sonar.api.resources.Scopes;
 import org.sonar.plugins.issuesdensity.IssuesDensityMetrics;
-import org.sonar.plugins.issuesdensity.batch.IssuesDensityDecorator;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class IssuesDensityDecoratorTest {
 
-  private IssuesDensityDecorator decorator;
-  private Resource resource;
+  IssuesDensityDecorator decorator;
+  Resource resource;
 
   @Before
   public void before() {
     resource = mock(Resource.class);
     when(resource.getScope()).thenReturn(Scopes.PROJECT);
     decorator = new IssuesDensityDecorator();
+  }
+
+  @Test
+  public void should_execute_on_project() throws Exception {
+    assertThat(decorator.shouldExecuteOnProject(mock(Project.class))).isTrue();
+  }
+
+  @Test
+  public void depends_upon_weighted_issues_and_ncloc() throws Exception {
+    assertThat(decorator.dependsUponWeightedIssuesAndNcloc()).containsOnly(IssuesDensityMetrics.WEIGHTED_ISSUES, CoreMetrics.NCLOC);
+  }
+
+  @Test
+  public void generates_issues_density() throws Exception {
+    assertThat(decorator.generatesIssuesDensity()).isEqualTo(IssuesDensityMetrics.ISSUES_DENSITY);
   }
 
   @Test
