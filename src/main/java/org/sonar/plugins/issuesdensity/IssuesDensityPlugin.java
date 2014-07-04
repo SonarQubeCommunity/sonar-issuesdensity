@@ -20,10 +20,12 @@
 package org.sonar.plugins.issuesdensity;
 
 import com.google.common.collect.ImmutableList;
-import org.sonar.api.*;
+import org.sonar.api.CoreProperties;
+import org.sonar.api.SonarPlugin;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.plugins.issuesdensity.batch.IssuesDensityDecorator;
 import org.sonar.plugins.issuesdensity.batch.WeightedIssuesDecorator;
+import org.sonar.plugins.issuesdensity.ui.HotspotMostViolatedComponentsWidget;
 
 import java.util.List;
 
@@ -34,12 +36,15 @@ public class IssuesDensityPlugin extends SonarPlugin {
 
   public List getExtensions() {
     return ImmutableList.of(
-      IssuesDensityMetrics.class, WeightedIssuesDecorator.class, IssuesDensityDecorator.class,
+      IssuesDensityMetrics.class,
+      HotspotMostViolatedComponentsWidget.class,
+      WeightedIssuesDecorator.class,
+      IssuesDensityDecorator.class,
       PropertyDefinition.builder(WEIGHTED_ISSUES_PROPERTY)
         .name("Rules weight")
         .description("A weight is associated to each severity to emphasize the most critical issues.")
         .defaultValue(WEIGHTED_ISSUES_DEFAULT_VALUE)
-        .category(CoreProperties.CATEGORY_GENERAL)
+        // .category("")
         .deprecatedKey("sonar.core.rule.weight")
         .build()
       );

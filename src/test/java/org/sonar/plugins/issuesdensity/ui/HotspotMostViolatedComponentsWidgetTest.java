@@ -17,16 +17,33 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.issuesdensity;
+package org.sonar.plugins.issuesdensity.ui;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class IssuesDensityPluginTest {
+public class HotspotMostViolatedComponentsWidgetTest {
+
+  HotspotMostViolatedComponentsWidget widget;
+
+  @Before
+  public void setUp() throws Exception {
+    widget = new HotspotMostViolatedComponentsWidget();
+  }
 
   @Test
-  public void get_extensions() throws Exception {
-    assertThat(new IssuesDensityPlugin().getExtensions()).hasSize(5);
+  public void widget_definitions() throws Exception {
+    assertThat(widget.getId()).isNotNull();
+    assertThat(widget.getTitle()).isNotNull();
+    assertThat(widget.getTemplatePath()).isNotNull();
+  }
+
+  @Test
+  public void find_template() {
+    assertThat(widget.getClass().getResource(widget.getTemplatePath()))
+      .as("Template not found: " + widget.getTemplatePath())
+      .isNotNull();
   }
 }

@@ -17,16 +17,28 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-package org.sonar.plugins.issuesdensity;
+package org.sonar.plugins.issuesdensity.ui;
 
-import org.junit.Test;
+import org.sonar.api.web.*;
 
-import static org.fest.assertions.Assertions.assertThat;
+@WidgetCategory({"Hotspots"})
+@WidgetProperties({
+  @WidgetProperty(key = "numberOfLines", type = WidgetPropertyType.INTEGER, defaultValue = "5")
+})
+public class HotspotMostViolatedComponentsWidget extends AbstractRubyTemplate implements RubyRailsWidget {
 
-public class IssuesDensityPluginTest {
+  @Override
+  public String getId() {
+    return "hotspot_most_violated_resources";
+  }
 
-  @Test
-  public void get_extensions() throws Exception {
-    assertThat(new IssuesDensityPlugin().getExtensions()).hasSize(5);
+  @Override
+  public String getTitle() {
+    return "Most Violated Components";
+  }
+
+  @Override
+  protected String getTemplatePath() {
+    return "/issuesdensity/widgets/hotspot_most_violated_components.html.erb";
   }
 }
