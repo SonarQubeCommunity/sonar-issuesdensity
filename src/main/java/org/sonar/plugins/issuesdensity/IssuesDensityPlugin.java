@@ -20,7 +20,6 @@
 package org.sonar.plugins.issuesdensity;
 
 import com.google.common.collect.ImmutableList;
-import org.sonar.api.CoreProperties;
 import org.sonar.api.SonarPlugin;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.plugins.issuesdensity.batch.IssuesDensityDecorator;
