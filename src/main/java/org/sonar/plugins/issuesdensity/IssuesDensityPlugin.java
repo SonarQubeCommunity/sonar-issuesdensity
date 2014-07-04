@@ -44,7 +44,6 @@ public class IssuesDensityPlugin extends SonarPlugin {
         .name("Rules weight")
         .description("A weight is associated to each severity to emphasize the most critical issues.")
         .defaultValue(WEIGHTED_ISSUES_DEFAULT_VALUE)
-        // .category("")
         .deprecatedKey("sonar.core.rule.weight")
         .build()
       );
