@@ -51,7 +51,7 @@
   </issueManagement>
 
   <properties>
-    <sonar.version>4.5-SNAPSHOT</sonar.version>
+    <sonar.version>4.5-RC1</sonar.version>
     <sonar.pluginName>Issues Density</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.issuesdensity.IssuesDensityPlugin</sonar.pluginClass>
   </properties>
