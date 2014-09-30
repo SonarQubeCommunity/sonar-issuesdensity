@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>sonar-issues-density-plugin</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <packaging>sonar-plugin</packaging>
 
   <name>Issues Density Plugin</name>
@@ -42,7 +42,7 @@
     <connection>scm:git:git@github.com:SonarCommunity/sonar-issuesdensity.git</connection>
     <developerConnection>scm:git:git@github.com:SonarCommunity/sonar-issuesdensity.git</developerConnection>
     <url>https://github.com/SonarCommunity/sonnar-issuesdensity</url>
-    <tag>1.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>JIRA</system>
