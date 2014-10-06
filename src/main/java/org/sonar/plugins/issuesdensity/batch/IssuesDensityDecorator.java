@@ -34,6 +34,7 @@ import java.util.List;
 @DependsUpon(DecoratorBarriers.ISSUES_TRACKED)
 public class IssuesDensityDecorator implements Decorator {
 
+  @Override
   public boolean shouldExecuteOnProject(Project project) {
     return true;
   }
@@ -48,6 +49,7 @@ public class IssuesDensityDecorator implements Decorator {
     return IssuesDensityMetrics.ISSUES_DENSITY;
   }
 
+  @Override
   public void decorate(Resource resource, DecoratorContext context) {
     if (shouldDecorateResource(context)) {
       decorateDensity(context);
