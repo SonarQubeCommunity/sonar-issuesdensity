@@ -14,7 +14,7 @@
 
   <name>Issues Density Plugin</name>
   <description>Provides RCI (Rules Compliance Index) and Weighted Issues metrics</description>
-  <url>http://docs.codehaus.org/display/SONAR/Issues+Density+Plugin</url>
+  <url>http://redirect.sonarsource.com/plugins/issuesdensity.html</url>
   <inceptionYear>2014</inceptionYear>
   <organization>
     <name>SonarSource</name>
