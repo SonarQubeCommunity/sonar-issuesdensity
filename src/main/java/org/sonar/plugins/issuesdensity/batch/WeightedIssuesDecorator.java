@@ -22,6 +22,8 @@ package org.sonar.plugins.issuesdensity.batch;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import org.picocontainer.Startable;
 import org.sonar.api.batch.Decorator;
 import org.sonar.api.batch.DecoratorContext;
@@ -108,7 +110,10 @@ public class WeightedIssuesDecorator implements Decorator, Startable {
       }
     }
 
-    String distributionFormatted = KeyValueFormat.format(distribution);
+    // Compatibility with SQ 5.2: KeyValueFormat#format(Multiset) must not be used. Any dependency on Guava
+    // is dropped from API
+    String distributionFormatted = KeyValueFormat.format(toCountMap(distribution));
+
     // SONAR-4987 We should store an empty string for the distribution value
     Measure measure = new Measure(IssuesDensityMetrics.WEIGHTED_ISSUES, value, Strings.emptyToNull(distributionFormatted));
     context.saveMeasure(measure);
@@ -133,4 +138,11 @@ public class WeightedIssuesDecorator implements Decorator, Startable {
     return metric;
   }
 
+  private static Map<String, Integer> toCountMap(final Multiset<String> multiset) {
+    Map<String, Integer> counts = new LinkedHashMap<>();
+    for (String elt : multiset.elementSet()) {
+      counts.put(elt, multiset.count(elt));
+    }
+    return counts;
+  }
 }
