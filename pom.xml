@@ -46,7 +46,7 @@
   </scm>
   <issueManagement>
     <system>JIRA</system>
-    <url>http://jira.codehaus.org/browse/SONARRCI</url>
+    <url>http://jira.sonarsource.com/browse/SONARRCI</url>
   </issueManagement>
 
   <properties>
