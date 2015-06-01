@@ -36,8 +36,10 @@ import org.sonar.api.rule.Severity;
 import org.sonar.plugins.issuesdensity.IssuesDensityMetrics;
 import org.sonar.plugins.issuesdensity.IssuesDensityPlugin;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WeightedIssuesDecoratorTest {
