@@ -20,11 +20,10 @@
 package org.sonar.plugins.issuesdensity;
 
 import com.google.common.collect.Lists;
+import java.util.List;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
 import org.sonar.api.measures.Metrics;
-
-import java.util.List;
 
 public final class IssuesDensityMetrics implements Metrics {
 
@@ -48,6 +47,7 @@ public final class IssuesDensityMetrics implements Metrics {
     .setOptimizedBestValue(true)
     .create();
 
+  @Override
   public List<Metric> getMetrics() {
     return Lists.<Metric>newArrayList(ISSUES_DENSITY, WEIGHTED_ISSUES);
   }

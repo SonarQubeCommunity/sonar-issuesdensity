@@ -96,11 +96,11 @@ public final class ItUtils {
     return resource != null ? resource.getMeasure(metricKey) : null;
   }
 
-  public static SonarRunner createRunner(String project, String profile, String... properties) {
-    return SonarRunner.create(ItUtils.locateProjectDir(project))
-      .setProfile(profile)
-      .setProperties("sonar.dynamicAnalysis", "false")
-      .setProperties(properties);
+  public static SonarRunner createRunner(Orchestrator orchestrator, String projectDir, String projectKey, String profile, String... properties) {
+    orchestrator.getServer().provisionProject(projectKey,projectKey);
+    orchestrator.getServer().associateProjectToQualityProfile(projectKey, "xoo", profile);
+
+    return SonarRunner.create(ItUtils.locateProjectDir(projectDir)).setProperties(properties);
   }
 
 }

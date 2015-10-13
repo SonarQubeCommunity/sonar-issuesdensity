@@ -17,8 +17,7 @@
  * License along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02
  */
-@ParametersAreNonnullByDefault
-package org.sonar.plugins.issuesdensity.batch;
+@ParametersAreNonnullByDefault package org.sonar.plugins.issuesdensity.ce;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

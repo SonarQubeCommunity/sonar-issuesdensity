@@ -18,8 +18,6 @@
                                 :conditions => [(snapshots_conditions + measures_conditions).join(' AND '), snapshots_values.merge(measures_values)],
                                 :order => "project_measures.value #{'DESC' if metric.direction<0}",
                                 :limit => limit)
-   measures=measures.select { |m| m.text_value.present? }
-
    snapshots=Snapshot.find(measures.map { |m| m.snapshot_id }, :include => 'project')
    snapshots_by_id = {}
    snapshots.each do |s|
@@ -55,11 +53,13 @@
     <%
        measures.each do |measure|
          resource = snapshots_by_id[measure.snapshot_id].resource
-         violations_per_severity={}
-         measure.text_value.split(';').each do |part|
-           fields=part.split('=')
-           violations_per_severity[fields[0]]=fields[1]
-         end
+         snapshot = resource.last_snapshot
+         blocker_violations = snapshot.measure('blocker_violations')
+         critical_violations = snapshot.measure('critical_violations')
+         major_violations = snapshot.measure('major_violations')
+         minor_violations = snapshot.measure('minor_violations')
+         info_violations = snapshot.measure('info_violations')
+
     %>
       <tr class="<%= cycle 'even', 'odd', :name => ('hotspot_most_violated_resources' + widget.id.to_s) -%>">
         <td>
@@ -69,31 +69,31 @@
           <i class="icon-severity-blocker"></i>
         </td>
         <td class="small left">
-          <%= violations_per_severity["BLOCKER"] ? violations_per_severity["BLOCKER"].to_s : "0" -%>
+          <%= blocker_violations ? format_measure(blocker_violations) : '0' -%>
         </td>
         <td class="small right">
           <i class="icon-severity-critical"></i>
         </td>
         <td class="small left">
-          <%= violations_per_severity["CRITICAL"] ? violations_per_severity["CRITICAL"].to_s : "0" -%>
+          <%= critical_violations ? format_measure(critical_violations) : '0' -%>
         </td>
         <td class="small right">
           <i class="icon-severity-major"></i>
         </td>
         <td class="small left">
-          <%= violations_per_severity["MAJOR"] ? violations_per_severity["MAJOR"].to_s : "0" -%>
+          <%= major_violations ? format_measure(major_violations) : '0' -%>
         </td>
         <td class="small right">
           <i class="icon-severity-minor"></i>
         </td>
         <td class="small left">
-          <%= violations_per_severity["MINOR"] ? violations_per_severity["MINOR"].to_s : "0" -%>
+          <%= minor_violations ? format_measure(minor_violations) : '0' -%>
         </td>
         <td class="small right">
           <i class="icon-severity-info"></i>
         </td>
         <td class="small left">
-          <%= violations_per_severity["INFO"] ? violations_per_severity["INFO"].to_s : "0" -%>
+          <%= info_violations ? format_measure(info_violations) : '0' -%>
         </td>
       </tr>
     <%

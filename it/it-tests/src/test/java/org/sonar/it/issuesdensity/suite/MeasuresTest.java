@@ -20,9 +20,7 @@
 package org.sonar.it.issuesdensity.suite;
 
 import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.build.SonarRunner;
 import com.sonar.orchestrator.locator.FileLocation;
-import org.sonar.it.issuesdensity.ItUtils;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -30,6 +28,7 @@ import org.sonar.wsclient.services.Resource;
 import org.sonar.wsclient.services.ResourceQuery;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.sonar.it.issuesdensity.ItUtils.createRunner;
 
 public class MeasuresTest {
 
@@ -46,14 +45,12 @@ public class MeasuresTest {
    */
   @Test
   public void weighted_violations_measures() throws Exception {
-    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/org/sonar/it/issuesdensity/profile-with-many-rules.xml"));
-    orchestrator.executeBuild(SonarRunner.create(ItUtils.locateProjectDir("xoo-multi-modules-sample"))
-      .setProperties("sonar.profile", "with-many-rules"));
+    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/com/sonar/it/issuesdensity/profile-with-many-rules.xml"));
+    orchestrator.executeBuild(createRunner(orchestrator, "xoo-multi-modules-sample", "com.sonarsource.it.samples:multi-modules-sample", "with-many-rules"));
 
     Resource project = orchestrator.getServer().getWsClient()
       .find(ResourceQuery.createForMetrics("com.sonarsource.it.samples:multi-modules-sample", "weighted_violations"));
     assertThat(project.getMeasure("weighted_violations").getValue()).isEqualTo(84);
-    assertThat(project.getMeasure("weighted_violations").getData()).isEqualTo("INFO=2;MINOR=52;MAJOR=4;CRITICAL=4");
   }
 
   /**
@@ -61,9 +58,8 @@ public class MeasuresTest {
    */
   @Test
   public void violations_density_measures() throws Exception {
-    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/org/sonar/it/issuesdensity/MeasuresTest/violations-density-measures-profile.xml"));
-    orchestrator.executeBuild(SonarRunner.create(ItUtils.locateProjectDir("xoo-multi-modules-sample"))
-      .setProperties("sonar.profile", "violations-density-measures-profile"));
+    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/com/sonar/it/issuesdensity/MeasuresTest/violations-density-measures-profile.xml"));
+    orchestrator.executeBuild(createRunner(orchestrator, "xoo-multi-modules-sample", "com.sonarsource.it.samples:multi-modules-sample", "violations-density-measures-profile"));
 
     Resource project = orchestrator.getServer().getWsClient()
       .find(ResourceQuery.createForMetrics("com.sonarsource.it.samples:multi-modules-sample", "violations_density"));

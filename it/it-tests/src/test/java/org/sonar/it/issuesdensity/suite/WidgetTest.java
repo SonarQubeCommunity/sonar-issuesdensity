@@ -20,13 +20,13 @@
 package org.sonar.it.issuesdensity.suite;
 
 import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.build.SonarRunner;
 import com.sonar.orchestrator.locator.FileLocation;
 import com.sonar.orchestrator.selenium.Selenese;
-import org.sonar.it.issuesdensity.ItUtils;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import static org.sonar.it.issuesdensity.ItUtils.createRunner;
 
 public class WidgetTest {
 
@@ -37,9 +37,8 @@ public class WidgetTest {
   public static void setup() throws Exception {
     orchestrator.resetData();
 
-    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/org/sonar/it/issuesdensity/profile-with-many-rules.xml"));
-    orchestrator.executeBuild(SonarRunner.create(ItUtils.locateProjectDir("xoo-multi-modules-sample"))
-      .setProperties("sonar.profile", "with-many-rules"));
+    orchestrator.getServer().restoreProfile(FileLocation.ofClasspath("/com/sonar/it/issuesdensity/profile-with-many-rules.xml"));
+    orchestrator.executeBuild(createRunner(orchestrator, "xoo-multi-modules-sample", "com.sonarsource.it.samples:multi-modules-sample", "with-many-rules"));
   }
 
   /**
