@@ -1,5 +1,5 @@
 /*
- * it-issues-report
+ * Issues Density Plugin :: Integration Tests
  * Copyright (C) 2014 ${owner}
  * sonarqube@googlegroups.com
  *

@@ -4,13 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonarsource.it</groupId>
-    <artifactId>it-issuesdensity</artifactId>
+    <groupId>org.sonarsource.issuesdensity</groupId>
+    <artifactId>it</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.sonarsource.it</groupId>
-  <artifactId>it-issues-report</artifactId>
+  <artifactId>it-tests</artifactId>
+  <name>Issues Density Plugin :: Integration Tests</name>
 
   <properties>
     <surefire.argLine>-server</surefire.argLine>

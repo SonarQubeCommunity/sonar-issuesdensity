@@ -6,18 +6,18 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>23</version>
+    <version>24-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.sonarsource.it</groupId>
-  <artifactId>it-issuesdensity</artifactId>
+  <groupId>org.sonarsource.issuesdensity</groupId>
+  <artifactId>it</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Issues Density Plugin :: Integration Tests</name>
+  <name>Issues Density Plugin :: Integration Tests Parent</name>
   <packaging>pom</packaging>
   <inceptionYear>2014</inceptionYear>
 
   <modules>
-    <module>it-plugins</module>
+    <module>it-plugins/xoo-plugin</module>
     <module>it-tests</module>
   </modules>
 

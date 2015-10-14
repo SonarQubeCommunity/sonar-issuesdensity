@@ -10,6 +10,7 @@ function installTravisTools {
 
 installTravisTools
 
+build_snapshot "SonarSource/parent-oss"
 build_snapshot "SonarSource/sonarqube"
 
 case "$TESTS" in

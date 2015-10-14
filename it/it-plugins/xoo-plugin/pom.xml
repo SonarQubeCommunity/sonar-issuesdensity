@@ -4,15 +4,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.sonarsource.it</groupId>
-    <artifactId>plugins</artifactId>
+    <groupId>org.sonarsource.issuesdensity</groupId>
+    <artifactId>it</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../..</relativePath>
   </parent>
 
   <artifactId>xoo-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
   <version>1.0-SNAPSHOT</version>
-  <description>Plugins :: Xoo</description>
+  <name>Issues Density Plugin :: Xoo</name>
+  <description>Xoo plugin for integration tests</description>
 
   <dependencies>
     <dependency>
@@ -47,7 +49,7 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.sonar</groupId>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <configuration>
           <pluginKey>xoo</pluginKey>
