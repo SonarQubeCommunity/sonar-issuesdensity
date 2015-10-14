@@ -7,6 +7,7 @@
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
     <version>24-SNAPSHOT</version>
+    <relativePath/>
   </parent>
 
   <groupId>org.sonarsource.issuesdensity</groupId>
