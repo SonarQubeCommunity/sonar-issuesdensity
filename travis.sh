@@ -10,8 +10,6 @@ function installTravisTools {
 
 installTravisTools
 
-build_snapshot "SonarSource/parent-oss"
-
 case "$TESTS" in
 
 CI)
